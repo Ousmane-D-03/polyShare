@@ -1,0 +1,519 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{fontawesome5}
+
+\geometry{margin=2.5cm}
+
+% Couleurs
+\definecolor{primary}{RGB}{0, 102, 204}
+\definecolor{secondary}{RGB}{255, 140, 0}
+\definecolor{success}{RGB}{40, 167, 69}
+\definecolor{danger}{RGB}{220, 53, 69}
+
+% Titres
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{1em}{}
+
+% En-tête
+\title{\Huge\bfseries PolyShare \\ \Large Plateforme de partage de polycopiés offline-first}
+\author{Projet étudiant - Sénégal}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\large\textit{``Télécharge une fois, lis toute la semaine''}
+\end{center}
+
+\vspace{1cm}
+
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------
+\section{Vision du projet}
+
+\subsection{Problématique}
+Les étudiants au Sénégal (UCAD, UGB, etc.) rencontrent plusieurs obstacles majeurs :
+\begin{itemize}[label=\textcolor{danger}{\faTimesCircle}]
+    \item Polycopiés hors de prix (2000-5000 FCFA par poly)
+    \item Connexion internet faible et instable
+    \item Bibliothèques surchargées et sous-équipées
+    \item Diffusion anarchique via WhatsApp
+    \item Pas de plateforme centralisée
+\end{itemize}
+
+\subsection{Solution proposée}
+\textbf{PolyShare} : une PWA (Progressive Web App) permettant aux étudiants de :
+\begin{itemize}[label=\textcolor{success}{\faCheckCircle}]
+    \item Partager gratuitement leurs polycopiés
+    \item Télécharger des polys pour consultation offline
+    \item Organiser leur bibliothèque par fac/filière/matière
+    \item Fonctionner même sans connexion internet
+\end{itemize}
+
+\subsection{Avantages compétitifs}
+\begin{enumerate}
+    \item \textbf{Offline-first} : fonctionne sans connexion constante
+    \item \textbf{Ultra-léger} : optimisé pour connexions faibles
+    \item \textbf{Gratuit} : pas de barrière financière
+    \item \textbf{PWA} : pas besoin du Play Store, installation directe
+    \item \textbf{Partage viral} : via QR code et Bluetooth (future)
+\end{enumerate}
+
+%-------------------------------------------------------------------
+\newpage
+\section{Architecture technique}
+
+\subsection{Stack technologique}
+
+\subsubsection{Frontend (PWA)}
+\begin{itemize}
+    \item \textbf{Framework} : React 18+ avec Vite
+    \item \textbf{Styling} : TailwindCSS
+    \item \textbf{Offline} : Service Worker + Workbox
+    \item \textbf{Stockage local} : IndexedDB (via Dexie.js)
+    \item \textbf{Lecture PDF} : PDF.js ou React-PDF
+    \item \textbf{UI Components} : shadcn/ui ou Headless UI
+\end{itemize}
+
+\subsubsection{Backend (API REST)}
+\begin{itemize}
+    \item \textbf{Runtime} : Node.js 20+ avec Express.js
+    \item \textbf{Base de données} : PostgreSQL (métadonnées)
+    \item \textbf{Stockage fichiers} : AWS S3 ou Cloudinary
+    \item \textbf{Cache} : Redis (optionnel phase 1)
+    \item \textbf{Authentification} : JWT
+\end{itemize}
+
+\subsubsection{Hébergement}
+\begin{itemize}
+    \item \textbf{Frontend} : Vercel ou Netlify (gratuit)
+    \item \textbf{Backend} : Railway, Render ou Fly.io (gratuit au début)
+    \item \textbf{Base de données} : Supabase ou Neon (PostgreSQL gratuit)
+    \item \textbf{CDN} : Cloudflare (gratuit)
+\end{itemize}
+
+\subsection{Fonctionnalités principales}
+
+\subsubsection{Phase MVP (Minimum Viable Product)}
+\begin{enumerate}
+    \item Inscription/connexion simple (email + mot de passe)
+    \item Navigation par fac/filière/matière/semestre
+    \item Upload de polycopiés (PDF uniquement)
+    \item Téléchargement pour lecture offline
+    \item Bibliothèque personnelle (stockage local)
+    \item Recherche basique
+    \item Système de karma (upload = points pour télécharger)
+\end{enumerate}
+
+\subsubsection{Phase 2 (post-MVP)}
+\begin{itemize}
+    \item Annotations sur PDF
+    \item Partage Bluetooth/Wi-Fi Direct
+    \item Mode "Pack de la semaine"
+    \item Signalement de contenu inapproprié
+    \item Statistiques personnelles
+    \item Notifications push
+\end{itemize}
+
+\subsubsection{Phase 3 (monétisation)}
+\begin{itemize}
+    \item Intégration Orange Money / Wave
+    \item Abonnement Premium
+    \item Anciens sujets d'examens
+    \item Stockage cloud illimité
+\end{itemize}
+
+%-------------------------------------------------------------------
+\newpage
+\section{Planification détaillée}
+
+\subsection{Phase 0 : Préparation (Semaine 1-2)}
+
+\subsubsection{Validation du besoin}
+\begin{itemize}[label=\faSquare]
+    \item Interviewer 15-20 étudiants sénégalais
+    \item Analyser la concurrence existante
+    \item Définir les personas utilisateurs
+    \item Valider les hypothèses clés
+    \item Créer un document de spécifications fonctionnelles
+\end{itemize}
+
+\subsubsection{Design UX/UI}
+\begin{itemize}[label=\faSquare]
+    \item Wireframes basse fidélité (papier/Excalidraw)
+    \item Maquettes haute fidélité (Figma)
+    \item Prototype cliquable
+    \item Tests utilisateurs (5 personnes minimum)
+    \item Itération sur le design
+\end{itemize}
+
+\subsubsection{Modélisation}
+\begin{itemize}[label=\faSquare]
+    \item Diagramme de cas d'utilisation (UML)
+    \item Diagramme de classes
+    \item Modèle de données (MCD/MLD)
+    \item Diagramme de séquence (actions principales)
+    \item Architecture système
+\end{itemize}
+
+\subsubsection{Setup environnement}
+\begin{itemize}[label=\faSquare]
+    \item Créer le repo GitHub
+    \item Initialiser le projet frontend (Vite + React)
+    \item Initialiser le projet backend (Express)
+    \item Setup ESLint + Prettier
+    \item Configurer le CI/CD de base
+\end{itemize}
+
+\subsection{Phase 1 : Développement MVP (Semaine 3-8)}
+
+\subsubsection{Semaine 3-4 : Backend fondations}
+\begin{itemize}[label=\faSquare]
+    \item Setup base de données PostgreSQL
+    \item Modèles : User, Document, Category, University, Faculty
+    \item API Auth : register, login, logout, refresh token
+    \item API Documents : upload, list, get by ID, delete
+    \item Middleware : auth, upload fichiers, validation
+    \item Tests unitaires (Jest)
+\end{itemize}
+
+\subsubsection{Semaine 5-6 : Frontend core}
+\begin{itemize}[label=\faSquare]
+    \item Setup PWA (manifest.json, service worker)
+    \item Pages : Home, Login, Register, Browse, Document Detail
+    \item Composants réutilisables : Card, Button, Input, Modal
+    \item Intégration API auth
+    \item Intégration API documents (liste, détail)
+    \item Système de routing (React Router)
+\end{itemize}
+
+\subsubsection{Semaine 7 : Fonctionnalités offline}
+\begin{itemize}[label=\faSquare]
+    \item Service Worker avec Workbox
+    \item Cache stratégies (Cache First pour PDFs)
+    \item IndexedDB setup avec Dexie.js
+    \item Download manager (téléchargement + stockage local)
+    \item Bibliothèque offline (lecture depuis IndexedDB)
+    \item Sync queue pour uploads en attente
+\end{itemize}
+
+\subsubsection{Semaine 8 : Upload et recherche}
+\begin{itemize}[label=\faSquare]
+    \item Formulaire upload avec validation
+    \item Compression PDF côté client (optionnel)
+    \item Upload avec progression
+    \item Système de recherche (fac/filière/matière/keyword)
+    \item Filtres avancés
+    \item Système de karma (upload = +10 points, download = -1 point)
+\end{itemize}
+
+\subsection{Phase 2 : Tests et optimisation (Semaine 9-10)}
+
+\subsubsection{Tests}
+\begin{itemize}[label=\faSquare]
+    \item Tests end-to-end (Playwright ou Cypress)
+    \item Tests de charge (combien d'utilisateurs simultanés ?)
+    \item Tests offline complets
+    \item Tests sur connexion lente (throttling)
+    \item Tests multi-devices (Android, iOS, Desktop)
+\end{itemize}
+
+\subsubsection{Optimisations}
+\begin{itemize}[label=\faSquare]
+    \item Optimisation taille bundle (code splitting)
+    \item Lazy loading des composants
+    \item Compression images et assets
+    \item Optimisation requêtes SQL (indexes)
+    \item Mise en cache API (Redis ou in-memory)
+\end{itemize}
+
+\subsubsection{Sécurité}
+\begin{itemize}[label=\faSquare]
+    \item Rate limiting (brute force protection)
+    \item Validation robuste des uploads (type MIME, taille)
+    \item Sanitization des inputs
+    \item Protection CSRF
+    \item Headers sécurisés (CORS, CSP)
+    \item Scan vulnérabilités (npm audit)
+\end{itemize}
+
+\subsection{Phase 3 : Déploiement et lancement (Semaine 11-12)}
+
+\subsubsection{Déploiement}
+\begin{itemize}[label=\faSquare]
+    \item Deploy backend sur Railway/Render
+    \item Deploy frontend sur Vercel/Netlify
+    \item Setup base de données production (Supabase)
+    \item Configuration CDN Cloudflare
+    \item Setup monitoring (Sentry pour errors)
+    \item Setup analytics (Plausible ou Umami)
+\end{itemize}
+
+\subsubsection{Bêta test}
+\begin{itemize}[label=\faSquare]
+    \item Recruter 30 étudiants testeurs (UCAD priorité)
+    \item Créer groupe WhatsApp support
+    \item Onboarding des testeurs
+    \item Collecte feedback quotidien
+    \item Itérations rapides (hotfix en 24h)
+\end{itemize}
+
+\subsubsection{Marketing pré-lancement}
+\begin{itemize}[label=\faSquare]
+    \item Page landing explicative
+    \item Tutoriel vidéo (3 min max)
+    \item Affiches à imprimer (QR code)
+    \item Posts réseaux sociaux (templates)
+    \item Contacter délégués de classe
+    \item Préparer pitch pour associations étudiantes
+\end{itemize}
+
+\subsection{Phase 4 : Lancement public (Semaine 13+)}
+
+\subsubsection{Semaine 13 : Lancement soft}
+\begin{itemize}[label=\faSquare]
+    \item Annonce dans 5 groupes Facebook étudiants
+    \item Partage dans 10 groupes WhatsApp
+    \item Affiches dans 3 facultés UCAD
+    \item Post LinkedIn ciblé Sénégal
+    \item Objectif : 100 utilisateurs semaine 1
+\end{itemize}
+
+\subsubsection{Semaine 14-16 : Croissance}
+\begin{itemize}[label=\faSquare]
+    \item Partenariat avec 2-3 associations étudiantes
+    \item Campagne "Partage ton poly, gagne un abonnement"
+    \item Premier rapport de métriques
+    \item Identifier les power users (ambassadeurs)
+    \item Expansion vers UGB si succès UCAD
+\end{itemize}
+
+%-------------------------------------------------------------------
+\newpage
+\section{Modélisation UML}
+
+\subsection{Cas d'utilisation principaux}
+
+\subsubsection{Acteurs}
+\begin{itemize}
+    \item \textbf{Étudiant non connecté} : peut naviguer, voir les polys
+    \item \textbf{Étudiant connecté} : peut télécharger, uploader
+    \item \textbf{Modérateur} (future) : valide les uploads
+    \item \textbf{Système} : gestion offline, sync
+\end{itemize}
+
+\subsubsection{Cas d'utilisation}
+\begin{enumerate}
+    \item S'inscrire / Se connecter
+    \item Naviguer par fac/filière/matière
+    \item Rechercher un polycopié
+    \item Télécharger un poly (pour offline)
+    \item Uploader un polycopié
+    \item Consulter sa bibliothèque offline
+    \item Gagner/dépenser des points karma
+    \item Signaler un contenu
+\end{enumerate}
+
+\subsection{Modèle de données}
+
+\subsubsection{Entités principales}
+\begin{verbatim}
+User {
+    id: UUID (PK)
+    email: String (unique)
+    password_hash: String
+    username: String
+    karma_points: Integer (default: 10)
+    role: Enum ['student', 'moderator', 'admin']
+    university_id: UUID (FK)
+    created_at: Timestamp
+    updated_at: Timestamp
+}
+
+University {
+    id: UUID (PK)
+    name: String (ex: "UCAD")
+    country: String (default: "Sénégal")
+    city: String
+}
+
+Faculty {
+    id: UUID (PK)
+    name: String (ex: "Sciences et Techniques")
+    university_id: UUID (FK)
+}
+
+Major {
+    id: UUID (PK)
+    name: String (ex: "Informatique")
+    faculty_id: UUID (FK)
+}
+
+Course {
+    id: UUID (PK)
+    name: String (ex: "Algorithmique")
+    code: String (ex: "INFO301")
+    major_id: UUID (FK)
+    semester: Integer
+}
+
+Document {
+    id: UUID (PK)
+    title: String
+    description: Text
+    course_id: UUID (FK)
+    uploaded_by: UUID (FK -> User)
+    file_url: String (S3/Cloudinary)
+    file_size: Integer (bytes)
+    file_hash: String (SHA256, évite doublons)
+    downloads_count: Integer (default: 0)
+    status: Enum ['pending', 'approved', 'rejected']
+    created_at: Timestamp
+    updated_at: Timestamp
+}
+
+Download {
+    id: UUID (PK)
+    user_id: UUID (FK)
+    document_id: UUID (FK)
+    downloaded_at: Timestamp
+}
+\end{verbatim}
+
+\subsubsection{Relations}
+\begin{itemize}
+    \item Un User appartient à une University (N-1)
+    \item Une University a plusieurs Faculties (1-N)
+    \item Une Faculty a plusieurs Majors (1-N)
+    \item Un Major a plusieurs Courses (1-N)
+    \item Un Course a plusieurs Documents (1-N)
+    \item Un User peut uploader plusieurs Documents (1-N)
+    \item Un User peut télécharger plusieurs Documents (N-N via Download)
+\end{itemize}
+
+%-------------------------------------------------------------------
+\newpage
+\section{Métriques de succès}
+
+\subsection{Objectifs MVP (3 mois)}
+\begin{itemize}
+    \item \textbf{500 utilisateurs inscrits} (UCAD uniquement)
+    \item \textbf{100 polycopiés uploadés}
+    \item \textbf{2000 téléchargements} au total
+    \item \textbf{40\% de rétention} semaine 2
+    \item \textbf{20\% d'utilisateurs actifs hebdomadaires}
+\end{itemize}
+
+\subsection{KPIs à suivre}
+\begin{enumerate}
+    \item \textbf{Acquisition} : nouveaux inscrits / semaine
+    \item \textbf{Activation} : \% qui téléchargent au moins 1 poly
+    \item \textbf{Rétention} : utilisateurs actifs semaine N / semaine N-1
+    \item \textbf{Engagement} : temps moyen passé offline sur l'app
+    \item \textbf{Viralité} : \% d'utilisateurs qui invitent d'autres
+    \item \textbf{Contribution} : ratio uploads / downloads
+\end{enumerate}
+
+%-------------------------------------------------------------------
+\section{Budget et ressources}
+
+\subsection{Coûts estimés (6 premiers mois)}
+\begin{itemize}
+    \item \textbf{Hébergement} : 0-20\$ / mois (gratuit au début)
+    \item \textbf{Stockage S3} : \textasciitilde10\$ / mois (500 polys)
+    \item \textbf{Nom de domaine} : 12\$ / an (.sn ou .com)
+    \item \textbf{Outils} : Figma (gratuit), VS Code (gratuit)
+    \item \textbf{Marketing} : 50\$ (impression affiches)
+    \item \textbf{TOTAL} : \textasciitilde100\$ les 6 premiers mois
+\end{itemize}
+
+\subsection{Temps requis}
+\begin{itemize}
+    \item \textbf{Développement MVP} : 10-15h / semaine × 10 semaines = 100-150h
+    \item \textbf{Tests et déploiement} : 20h
+    \item \textbf{Marketing et support} : 5h / semaine continu
+\end{itemize}
+
+%-------------------------------------------------------------------
+\section{Risques et mitigations}
+
+\subsection{Risques techniques}
+\begin{enumerate}
+    \item \textbf{Stockage local limité sur téléphones}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : compression PDFs, auto-nettoyage
+    \end{itemize}
+    
+    \item \textbf{Service Worker complexe}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : utiliser Workbox (simplifie)
+    \end{itemize}
+    
+    \item \textbf{Upload de contenu inapproprié}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : modération + signalement
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Risques business}
+\begin{enumerate}
+    \item \textbf{Faible adoption initiale}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : focus sur 1 fac, ambassadeurs
+    \end{itemize}
+    
+    \item \textbf{Problèmes de droits d'auteur}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : CGU claires, disclaimer
+    \end{itemize}
+    
+    \item \textbf{Concurrence émergente}
+    \begin{itemize}
+        \item[$\rightarrow$] Mitigation : vitesse d'exécution, communauté
+    \end{itemize}
+\end{enumerate}
+
+%-------------------------------------------------------------------
+\section{Prochaines étapes immédiates}
+
+\subsection{Cette semaine}
+\begin{enumerate}
+    \item \fbox{Valider l'idée} : interviewer 10 étudiants
+    \item \fbox{Setup repos} : GitHub frontend + backend
+    \item \fbox{Wireframes} : esquisser les 5 écrans principaux
+    \item \fbox{Modélisation} : diagramme de classes basique
+\end{enumerate}
+
+\subsection{Semaine prochaine}
+\begin{enumerate}
+    \item \fbox{Maquettes Figma} : design système complet
+    \item \fbox{Setup projet} : Vite + React + Express
+    \item \fbox{Premier endpoint} : API register/login
+    \item \fbox{Première page} : Home avec navigation
+\end{enumerate}
+
+%-------------------------------------------------------------------
+\vspace{2cm}
+\begin{center}
+\Large\textbf{Let's build something that matters! 🚀}
+
+\vspace{0.5cm}
+\normalsize
+Contact : [ton email]\\
+GitHub : [ton username]\\
+Localisation : France → Sénégal
+\end{center}
+
+\end{document}
