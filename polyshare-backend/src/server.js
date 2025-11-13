@@ -2,11 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-require('dotenv').config({ path: require('path').resolve(__dirname, '../../../.env') });
-
+const path = require('path');
+const fs = require('fs');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Créer le dossier uploads s'il n'existe pas
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('📁 Uploads directory created');
+}
 
 // ==============================================
 // MIDDLEWARE
